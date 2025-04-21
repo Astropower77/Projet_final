@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Optimisation de Trajectoire d’Avion avec Données Météo documentation &#8212; Optimisation de Trajectoire d’Avion avec Données Météo  documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=5ecbeea2" />
+    <link rel="stylesheet" type="text/css" href="_static/basic.css?v=b08954a9" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=27fed22d" />
+    <script src="_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="optimisation-de-trajectoire-davion-avec-donnees-meteo-documentation">
+<h1>Optimisation de Trajectoire d’Avion avec Données Météo documentation<a class="headerlink" href="#optimisation-de-trajectoire-davion-avec-donnees-meteo-documentation" title="Link to this heading">¶</a></h1>
+<p>—</p>
+<p>### <strong>Module : Optimisation de trajectoire d’avion avec météo</strong></p>
+<p>#### <strong>But du module</strong>
+Ce script optimise la trajectoire d’un avion entre deux aéroports en tenant compte des conditions météorologiques. Il ajuste la trajectoire pour éviter les zones dangereuses (vents forts et précipitations) et affiche les résultats sur une carte interactive.</p>
+<p>—</p>
+<p>### <strong>Fonctions</strong></p>
+<p>#### <cite>get_weather_data(lat, lon)</cite>
+<strong>But</strong> : Récupère les données météorologiques pour un point donné à l’aide de l’API Open-Meteo.</p>
+<p><strong>Paramètres</strong> :
+- <cite>lat</cite> (float) : Latitude du point.
+- <cite>lon</cite> (float) : Longitude du point.</p>
+<p><strong>Retour</strong> :
+- Tuple <cite>(windspeed, winddirection, precipitation)</cite> où :</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><cite>windspeed</cite> (float) : Vitesse du vent en m/s.</p></li>
+<li><p><cite>winddirection</cite> (float) : Direction du vent en degrés.</p></li>
+<li><p><cite>precipitation</cite> (float) : Précipitations en mm.</p></li>
+</ul>
+</div></blockquote>
+<p><strong>Exemple</strong> :
+<code class="docutils literal notranslate"><span class="pre">`python</span>
+<span class="pre">windspeed,</span> <span class="pre">winddirection,</span> <span class="pre">precipitation</span> <span class="pre">=</span> <span class="pre">get_weather_data(48.8566,</span> <span class="pre">2.3522)</span>
+<span class="pre">`</span></code></p>
+<p>—</p>
+<p>#### <cite>is_point_in_circle(lat, lon, circle_lat, circle_lon, radius)</cite>
+<strong>But</strong> : Vérifie si un point se trouve dans un cercle défini par un centre et un rayon.</p>
+<p><strong>Paramètres</strong> :
+- <cite>lat</cite> (float) : Latitude du point à tester.
+- <cite>lon</cite> (float) : Longitude du point à tester.
+- <cite>circle_lat</cite> (float) : Latitude du centre du cercle.
+- <cite>circle_lon</cite> (float) : Longitude du centre du cercle.
+- <cite>radius</cite> (float) : Rayon du cercle en mètres.</p>
+<p><strong>Retour</strong> :
+- <cite>True</cite> si le point est dans le cercle, <cite>False</cite> sinon.</p>
+<p><strong>Exemple</strong> :
+<code class="docutils literal notranslate"><span class="pre">`python</span>
+<span class="pre">is_in_zone</span> <span class="pre">=</span> <span class="pre">is_point_in_circle(48.8566,</span> <span class="pre">2.3522,</span> <span class="pre">48.8584,</span> <span class="pre">2.2945,</span> <span class="pre">1000)</span>
+<span class="pre">`</span></code></p>
+<p>—</p>
+<p>#### <cite>move_perpendicularly(lat1, lon1, lat2, lon2, lat, lon, distance_m)</cite>
+<strong>But</strong> : Déplace un point perpendiculairement à la trajectoire entre deux autres points.</p>
+<p><strong>Paramètres</strong> :
+- <cite>lat1</cite>, <cite>lon1</cite> (float) : Coordonnées du point de départ de la trajectoire.
+- <cite>lat2</cite>, <cite>lon2</cite> (float) : Coordonnées du point d’arrivée de la trajectoire.
+- <cite>lat</cite>, <cite>lon</cite> (float) : Coordonnées du point à déplacer.
+- <cite>distance_m</cite> (float) : Distance de déplacement en mètres.</p>
+<p><strong>Retour</strong> :
+- Tuple <cite>(new_lat, new_lon)</cite> : Nouvelle position après le déplacement.</p>
+<p><strong>Exemple</strong> :
+<code class="docutils literal notranslate"><span class="pre">`python</span>
+<span class="pre">new_lat,</span> <span class="pre">new_lon</span> <span class="pre">=</span> <span class="pre">move_perpendicularly(48.8566,</span> <span class="pre">2.3522,</span> <span class="pre">48.8584,</span> <span class="pre">2.2945,</span> <span class="pre">48.8600,</span> <span class="pre">2.3500,</span> <span class="pre">500)</span>
+<span class="pre">`</span></code></p>
+<p>—</p>
+<p>### <strong>Comportement du Script</strong></p>
+<ol class="arabic simple">
+<li><p><strong>Sélection des aéroports</strong> : L’utilisateur choisit les aéroports de départ et d’arrivée via une interface Streamlit.</p></li>
+<li><p><strong>Calcul de la trajectoire</strong> : Le script calcule la trajectoire linéaire entre les deux aéroports.</p></li>
+<li><p><strong>Données météorologiques</strong> : Il récupère les conditions météo sur la trajectoire via l’API <strong>Open-Meteo</strong>.</p></li>
+<li><p><strong>Identification des zones dangereuses</strong> : Les zones avec un vent supérieur à 10 m/s ou des précipitations supérieures à 0.2 mm sont marquées comme dangereuses.</p></li>
+<li><p><strong>Modification de la trajectoire</strong> : La trajectoire est modifiée pour éviter ces zones, en déplaçant les points perpendiculairement.</p></li>
+<li><p><strong>Affichage sur une carte</strong> : La trajectoire originale et modifiée est affichée sur une carte interactive avec <strong>Folium</strong>.</p></li>
+</ol>
+<p>—</p>
+<p>### <strong>Exemple d’utilisation</strong></p>
+<p>Lancer le script dans <strong>Streamlit</strong> pour visualiser l’optimisation de trajectoire.</p>
+<ol class="arabic simple">
+<li><p><strong>Sélectionner un aéroport de départ et d’arrivée</strong> dans la barre latérale.</p></li>
+<li><p>Le script calcule la trajectoire initiale et ajuste la trajectoire pour éviter les zones dangereuses.</p></li>
+<li><p><strong>Visualiser</strong> la carte avec la trajectoire initiale (en gris) et modifiée (en bleu), ainsi que les zones dangereuses (cercles rouges).</p></li>
+</ol>
+<p>—</p>
+<p>### <strong>Notes supplémentaires</strong>
+- Ce module nécessite les bibliothèques <strong>streamlit</strong>, <strong>folium</strong>, <strong>requests</strong>, <strong>geopy</strong> et <strong>numpy</strong>.
+- Assurez-vous que votre environnement dispose d’une connexion internet pour récupérer les données météo.</p>
+<p>—</p>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="#">Optimisation de Trajectoire d’Avion avec Données Météo</a></h1>
+
+
+
+
+
+
+
+
+
+<search id="searchbox" style="display: none" role="search">
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="#">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2025, Antonin CHIAROTTO.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 8.2.3</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
+      
+      |
+      <a href="_sources/index.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
