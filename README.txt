@@ -5,6 +5,8 @@ Ce projet Streamlit permet de visualiser et d’optimiser une trajectoire d’av
 - Les zones météo dangereuses (en rouge),
 - Une trajectoire modifiée automatiquement pour éviter les zones à risque (en bleu).
 
+La documentation du code se situe dans le dossier build/html/index.
+
 ---
 
 ## 📦 Fonctionnalités
